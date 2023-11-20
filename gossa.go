@@ -88,7 +88,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	_files, err := ioutil.ReadDir(fullPath)
 	check(err)
 
-	datestr := "Sort by Upload Date"
+	datestr := "Uploaded"
 
 	sorting := r.URL.Query().Get("sort") //the sorting input
 
@@ -107,11 +107,11 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 
 	nextsorting := ""
 	if sorting == "asc" {
-		datestr = "▲ Upload Date"
+		datestr = "▲ Uploaded"
 		nextsorting = "?sort="
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().Before(_files[j].ModTime()) })
 	} else if sorting == "desc" {
-		datestr = "▼ Upload Date"
+		datestr = "▼ Uploaded"
 		nextsorting = "?sort=asc"
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().After(_files[j].ModTime()) })
 	} else {
