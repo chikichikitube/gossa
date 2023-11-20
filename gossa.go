@@ -35,6 +35,7 @@ type pageTemplate struct {
 	Title       template.HTML
 	ExtraPath   template.HTML
 	Ro          bool
+	RowsHeader  []rowTemplate
 	RowsFiles   []rowTemplate
 	RowsFolders []rowTemplate
 }
@@ -126,7 +127,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	p := pageTemplate{}
 
 	// header
-	p.RowsFolders = append(p.RowsFolders, rowTemplate{"", template.HTML(nextsorting), "", "nothing", datestr}) //the last parameter here is the header for the date column
+	p.RowsHeader = append(p.RowsHeader, rowTemplate{"", template.HTML(nextsorting), "", "nothing", datestr}) //the last parameter here is the header for the date column
 	if path != *extraPath {
 		p.RowsFolders = append(p.RowsFolders, rowTemplate{"../", "../", "", "folder", ""})
 	}
