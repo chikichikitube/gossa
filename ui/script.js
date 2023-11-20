@@ -453,10 +453,10 @@ function setCursorTo (where) {
   let a = allA.find(el => el.innerText === where || el.innerText === where + '/')
 
   if (!a) {
-    if (allA[0].innerText === '../') {
-      a = allA[1] || allA[0]
+    if (allA[1].innerText === '../') {
+      a = allA[2] || allA[1]
     } else {
-      a = allA[0]
+      a = allA[1]
     }
   }
 
