@@ -90,10 +90,24 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	datestr := "Date"
 
 	sorting := r.URL.Query().Get("sort") //the sorting input
+
+	cookie, err := r.Cookie("sort")
+	if (err != nil && errors.Is(err, http.ErrNoCookie)) || r.URL.Query().Has("sort") {
+		cookie2 := http.Cookie{
+			Name:   "sort",
+			Value:  sorting,
+			Path:   "/",
+			MaxAge: 0,
+		}
+		http.SetCookie(w, &cookie2)
+	} else {
+		sorting = cookie.Value
+	}
+
 	nextsorting := ""
 	if sorting == "asc" {
 		datestr = "▲ Date"
-		nextsorting = "./"
+		nextsorting = "?sort="
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().Before(_files[j].ModTime()) })
 	} else if sorting == "desc" {
 		datestr = "▼ Date"
