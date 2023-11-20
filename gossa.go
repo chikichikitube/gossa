@@ -90,10 +90,24 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	datestr := "Date"
 
 	sorting := r.URL.Query().Get("sort") //the sorting input
+
+	cookie, err := r.Cookie("sort")
+	if (err != nil && errors.Is(err, http.ErrNoCookie)) || r.URL.Query().Has("sort") {
+		cookie2 := http.Cookie{
+			Name:   "sort",
+			Value:  sorting,
+			Path:   "/",
+			MaxAge: 0,
+		}
+		http.SetCookie(w, &cookie2)
+	} else {
+		sorting = cookie.Value
+	}
+
 	nextsorting := ""
 	if sorting == "asc" {
 		datestr = "▲ Date"
-		nextsorting = "./"
+		nextsorting = "?sort="
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().Before(_files[j].ModTime()) })
 	} else if sorting == "desc" {
 		datestr = "▼ Date"
@@ -142,7 +156,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 			href = strings.Replace(href, "/", "", 1)
 		}
 
-		date := el.ModTime().Format("01 Jan 2006")
+		date := el.ModTime().Format("02 Jan 2006")
 		if el.IsDir() {
 			p.RowsFolders = append(p.RowsFolders, rowTemplate{name + "/", template.HTML(href), "", "folder", date}) // change last param to `""` to hide dates for folders
 		} else {
