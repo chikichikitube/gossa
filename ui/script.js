@@ -474,9 +474,9 @@ function moveArrow (down) {
   clearArrowSelected()
 
   if (down) {
-    i = all[i + 1] ? i + 1 : 0
+    i = all[i + 1] ? i + 1 : 1
   } else {
-    i = all[i - 1] ? i - 1 : all.length - 1
+    i = all[i - 1] && (i - 1 != 0) ? i - 1 : all.length - 1
   }
 
   all[i].classList.add('arrow-selected')
@@ -829,7 +829,7 @@ function init () {
   const successRestore = setCursorTo(localStorage.getItem('last-selected' + window.extraPath + location.pathname))
   if (!successRestore) {
     const entries = table.querySelectorAll('.arrow-icon')
-    entries.length === 1 ? entries[0].classList.add('arrow-selected') : entries[1].classList.add('arrow-selected')
+    entries.length === 2 ? entries[1].classList.add('arrow-selected') : entries[2].classList.add('arrow-selected')
   }
 
   setTitle()

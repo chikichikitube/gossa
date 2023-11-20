@@ -87,13 +87,20 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	_files, err := ioutil.ReadDir(fullPath)
 	check(err)
 
-	sorting := "" //the sorting input
+	datestr := "Date"
 
+	sorting := r.URL.Query().Get("sort") //the sorting input
+	nextsorting := ""
 	if sorting == "asc" {
+		datestr = "▲ Date"
+		nextsorting = "./"
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().Before(_files[j].ModTime()) })
 	} else if sorting == "desc" {
+		datestr = "▼ Date"
+		nextsorting = "?sort=asc"
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().After(_files[j].ModTime()) })
 	} else {
+		nextsorting = "?sort=desc"
 		sort.Slice(_files, func(i, j int) bool { return strings.ToLower(_files[i].Name()) < strings.ToLower(_files[j].Name()) })
 	}
 
@@ -103,9 +110,13 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 
 	title := "/" + strings.TrimPrefix(path, *extraPath)
 	p := pageTemplate{}
+
+	// header
+	p.RowsFolders = append(p.RowsFolders, rowTemplate{"", template.HTML(nextsorting), "", "nothing", datestr}) //the last parameter here is the header for the date column
 	if path != *extraPath {
-		p.RowsFolders = append(p.RowsFolders, rowTemplate{"../", "../", "", "folder", ""}) //the last parameter here is the header for the date column
+		p.RowsFolders = append(p.RowsFolders, rowTemplate{"../", "../", "", "folder", ""})
 	}
+
 	p.ExtraPath = template.HTML(html.EscapeString(*extraPath))
 	p.Ro = *ro
 	p.Title = template.HTML(html.EscapeString(title))
