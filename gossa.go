@@ -157,7 +157,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 			href = strings.Replace(href, "/", "", 1)
 		}
 
-		date := el.ModTime().Format("02 Jan 2006")
+		date := el.ModTime().Format("2020-01-01")
 		if el.IsDir() {
 			p.RowsFolders = append(p.RowsFolders, rowTemplate{name + "/", template.HTML(href), "", "folder", date}) // change last param to `""` to hide dates for folders
 		} else {
