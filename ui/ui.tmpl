@@ -12,6 +12,21 @@
     <title>{{.Title}}</title>
     <link href="data:image/svg+xml;base64,favicon_will_be_here" rel="icon" type="image/svg+xml" />
     <style type="text/css">css_will_be_here</style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Sans&display=swap');
+
+        html {
+        color: #fcf6c2;
+        background-color: #2d3436;
+        font-size: 1.5em;
+        font-family: 'Anonymous Pro', monospace;
+        overflow-x: hidden;
+        scrollbar-color: gray #2d3436;
+        -webkit-tap-highlight-color: transparent;
+        background-image: url('https://thesilentlibrary.com/media/grainbg.gif');}
+        
+    </style>
+
     <script>
         window.ro = {{.Ro}}
         window.extraPath = {{.ExtraPath}}.slice(0, -1)
