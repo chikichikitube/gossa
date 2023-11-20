@@ -88,7 +88,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	_files, err := ioutil.ReadDir(fullPath)
 	check(err)
 
-	datestr := "Date"
+	datestr := "Sort by Upload Date"
 
 	sorting := r.URL.Query().Get("sort") //the sorting input
 
@@ -107,11 +107,11 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 
 	nextsorting := ""
 	if sorting == "asc" {
-		datestr = "▲ Date"
+		datestr = "▲ Upload Date"
 		nextsorting = "?sort="
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().Before(_files[j].ModTime()) })
 	} else if sorting == "desc" {
-		datestr = "▼ Date"
+		datestr = "▼ Upload Date"
 		nextsorting = "?sort=asc"
 		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().After(_files[j].ModTime()) })
 	} else {
@@ -157,7 +157,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 			href = strings.Replace(href, "/", "", 1)
 		}
 
-		date := el.ModTime().Format("2020-01-01")
+		date := el.ModTime().Format("2006-01-02")
 		if el.IsDir() {
 			p.RowsFolders = append(p.RowsFolders, rowTemplate{name + "/", template.HTML(href), "", "folder", date}) // change last param to `""` to hide dates for folders
 		} else {

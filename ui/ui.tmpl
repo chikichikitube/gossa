@@ -24,6 +24,28 @@
         scrollbar-color: gray #2d3436;
         -webkit-tap-highlight-color: transparent;
         background-image: url('https://thesilentlibrary.com/media/grainbg.gif');}
+
+        .header {
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+            line-height: 50px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            background-color: #525252;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .header a {
+            color: #ffc2ce;
+            text-decoration:underline;
+        }
+        .header a:hover {
+            color: #ff5476;
+        }
         
     </style>
 
@@ -35,6 +57,12 @@
 </head>
 
 <body>
+
+    <div class="header">
+        <p style="padding: 4px 10px 0;"><a href="https://tsl.chikichiki.tube">[FILES]</a>&nbsp;|&nbsp;<a href="https://thesilentlibrary.com/directory">[MASTER LIST]</a>&nbsp;|&nbsp;<a href="https://thesilentlibrary.com/torrent">[TORRENT]</a>&nbsp;|&nbsp;<a href="https://twitter.com/tsl_librarian">[TWITTER]</a>&nbsp;|&nbsp;<a href="https://c.im/@tsl">[MASTODON]</a><br><a href="https://patreon.com/thesilentlibrary">[PATREON]</a>&nbsp;|&nbsp;<a href="https://chikichiki.tube/">[CHIKICHIKI.TUBE]</a>&nbsp;|&nbsp;<a href="https://gakiarchives.com/">[GAKI ARCHIVES]</a>&nbsp;|&nbsp;<a rel="me" href="https://thesilentlibrary.xyz/gallery.php">[ART GALLERY]</a>
+        </p>
+    </div>
+
     <div onclick="window.helpOff()" style="display: none;" id="help"><table id="helpTable"><tbody>
         <tr><td>Arrows/Enter</td><td>browse files/folders and pictures</td></tr>
         <tr><td>Ctrl/Meta + Enter</td><td>download selected item as archive</td></tr>
