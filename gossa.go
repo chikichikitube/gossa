@@ -28,6 +28,7 @@ type rowTemplate struct {
 	Href template.HTML
 	Size string
 	Ext  string
+	Date string
 }
 
 type pageTemplate struct {
@@ -85,7 +86,16 @@ func humanize(bytes int64) string {
 func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path string) {
 	_files, err := ioutil.ReadDir(fullPath)
 	check(err)
-	sort.Slice(_files, func(i, j int) bool { return strings.ToLower(_files[i].Name()) < strings.ToLower(_files[j].Name()) })
+
+	sorting := "" //the sorting input
+
+	if sorting == "asc" {
+		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().Before(_files[j].ModTime()) })
+	} else if sorting == "desc" {
+		sort.Slice(_files, func(i, j int) bool { return _files[i].ModTime().After(_files[j].ModTime()) })
+	} else {
+		sort.Slice(_files, func(i, j int) bool { return strings.ToLower(_files[i].Name()) < strings.ToLower(_files[j].Name()) })
+	}
 
 	if !strings.HasSuffix(path, "/") {
 		path += "/"
@@ -94,7 +104,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	title := "/" + strings.TrimPrefix(path, *extraPath)
 	p := pageTemplate{}
 	if path != *extraPath {
-		p.RowsFolders = append(p.RowsFolders, rowTemplate{"../", "../", "", "folder"})
+		p.RowsFolders = append(p.RowsFolders, rowTemplate{"../", "../", "", "folder", ""}) //the last parameter here is the header for the date column
 	}
 	p.ExtraPath = template.HTML(html.EscapeString(*extraPath))
 	p.Ro = *ro
@@ -121,12 +131,13 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 			href = strings.Replace(href, "/", "", 1)
 		}
 
+		date := el.ModTime().Format("01 Jan 2006")
 		if el.IsDir() {
-			p.RowsFolders = append(p.RowsFolders, rowTemplate{name + "/", template.HTML(href), "", "folder"})
+			p.RowsFolders = append(p.RowsFolders, rowTemplate{name + "/", template.HTML(href), "", "folder", date}) // change last param to `""` to hide dates for folders
 		} else {
 			sl := strings.Split(name, ".")
 			ext := strings.ToLower(sl[len(sl)-1])
-			p.RowsFiles = append(p.RowsFiles, rowTemplate{name, template.HTML(href), humanize(el.Size()), ext})
+			p.RowsFiles = append(p.RowsFiles, rowTemplate{name, template.HTML(href), humanize(el.Size()), ext, date})
 		}
 	}
 

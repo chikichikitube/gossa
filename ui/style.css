@@ -133,6 +133,12 @@ td.file-size {
   width: 30px;
 }
 
+td.mod-time {
+  text-align: right;
+  padding-left: 1em;
+  width: 160px
+}
+
 td.display-name {
   padding-left: .5em;
   text-overflow: ellipsis;
