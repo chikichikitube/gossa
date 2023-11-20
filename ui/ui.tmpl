@@ -76,7 +76,7 @@
     <div id="pdf" style="display:none;"> </div>
 
     <table id="linkTable">
-    {{range .RowsFolders}}
+    {{range .RowsHeader}}
         <tr>
             <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
             <td class="file-size"><code>{{.Size}}</code></td>
@@ -85,11 +85,20 @@
             <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
         </tr>
     {{end}}
+    {{range .RowsFolders}}
+        <tr>
+            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
+            <td class="file-size"><code>{{.Size}}</code></td>
+            <td class="mod-time">{{.Date}}</td>
+            <td class="arrow"><div class="arrow-icon"></div></td>
+            <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
+        </tr>
+    {{end}}
     {{range .RowsFiles}}
         <tr>
             <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
             <td class="file-size"><code>{{.Size}}</code></td>
-            <td class="mod-time"><a href="{{.Href}}">{{.Date}}</a></td>
+            <td class="mod-time">{{.Date}}</td>
             <td class="arrow"><div class="arrow-icon"></div></td>
             <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
         </tr>
