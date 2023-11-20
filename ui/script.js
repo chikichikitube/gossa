@@ -476,7 +476,7 @@ function moveArrow (down) {
   if (down) {
     i = all[i + 1] ? i + 1 : 1
   } else {
-    i = all[i - 1] && (i - 1 != 0) ? i - 1 : all.length - 1
+    i = all[i - 1] && (i - 1 !== 0) ? i - 1 : all.length - 1
   }
 
   all[i].classList.add('arrow-selected')
