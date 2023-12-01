@@ -21,6 +21,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type rowTemplate struct {
@@ -95,10 +96,10 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 	cookie, err := r.Cookie("sort")
 	if (err != nil && errors.Is(err, http.ErrNoCookie)) || r.URL.Query().Has("sort") {
 		cookie2 := http.Cookie{
-			Name:   "sort",
-			Value:  sorting,
-			Path:   "/",
-			MaxAge: 0,
+			Name:    "sort",
+			Value:   sorting,
+			Path:    "/",
+			Expires: time.Now().Add(365 * 24 * time.Hour),
 		}
 		http.SetCookie(w, &cookie2)
 	} else {
