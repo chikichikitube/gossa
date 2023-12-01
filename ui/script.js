@@ -6,6 +6,9 @@ function cancelDefault (e) {
   e.stopPropagation()
 }
 
+//clear localstorage overriding sessionstorage
+localStorage.clear()
+
 const warningMsg = () => 'Leaving will interrupt transfer?\n'
 const rmMsg = () => !confirm('Remove file?\n')
 const ensureMove = () => !confirm('move items?')
@@ -484,7 +487,7 @@ function moveArrow (down) {
   scrollToArrow()
 }
 
-const storeArrow = src => localStorage.setItem('last-selected' + window.extraPath + location.pathname, src)
+const storeArrow = src => sessionStorage.setItem('last-selected' + window.extraPath + location.pathname, src)
 
 const isTop = () => window.scrollY === 0
 const isBottom = () => (window.innerHeight + window.scrollY) >= document.body.offsetHeight
@@ -594,7 +597,7 @@ async function videoOn (src) {
   video.style.display = 'flex'
   videoHolder.pause()
 
-  const time = localStorage.getItem('video-time' + src)
+  const time = sessionStorage.getItem('video-time' + src)
   videoHolder.currentTime = parseInt(time) || 0
 
   videoHolder.src = src
@@ -604,7 +607,7 @@ async function videoOn (src) {
 
 function videosOff () {
   if (!isVideoMode()) { return }
-  localStorage.setItem('video-time' + videoHolder.src, videoHolder.currentTime)
+  sessionStorage.setItem('video-time' + videoHolder.src, videoHolder.currentTime)
   resetView()
   softPrev()
   return true
@@ -826,10 +829,11 @@ function init () {
   allImgs = allA.map(el => el.href).filter(isPic)
   imgsIndex = softStatePushed = 0
 
-  const successRestore = setCursorTo(localStorage.getItem('last-selected' + window.extraPath + location.pathname))
+  const successRestore = setCursorTo(sessionStorage.getItem('last-selected' + window.extraPath + location.pathname))
   if (!successRestore) {
     const entries = table.querySelectorAll('.arrow-icon')
-    entries.length === 2 ? entries[1].classList.add('arrow-selected') : entries[2].classList.add('arrow-selected')
+    const i = (entries.length !== 1) + (entries.length > 2 && document.title !== '/')
+    entries[i].classList.add('arrow-selected')
   }
 
   setTitle()
