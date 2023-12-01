@@ -6,7 +6,7 @@ function cancelDefault (e) {
   e.stopPropagation()
 }
 
-//clear localstorage overriding sessionstorage
+// clear localstorage overriding sessionstorage
 localStorage.clear()
 
 const warningMsg = () => 'Leaving will interrupt transfer?\n'
