@@ -133,10 +133,17 @@ td.file-size {
   width: 30px;
 }
 
+td.dir-size {
+  padding-left: 0;
+  width: 0;
+}
+
 td.mod-time {
   text-align: right;
   padding-left: 1em;
-  width: 160px
+  width: 0px;
+  max-width: 160px;
+  white-space: nowrap;
 }
 
 td.display-name {

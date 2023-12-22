@@ -6,8 +6,8 @@ function cancelDefault (e) {
   e.stopPropagation()
 }
 
-// clear localstorage overriding sessionstorage
-localStorage.clear()
+// clear localstorage last-selected
+localStorage.removeItem('last-selected')
 
 const warningMsg = () => 'Leaving will interrupt transfer?\n'
 const rmMsg = () => !confirm('Remove file?\n')
@@ -597,7 +597,7 @@ async function videoOn (src) {
   video.style.display = 'flex'
   videoHolder.pause()
 
-  const time = sessionStorage.getItem('video-time' + src)
+  const time = localStorage.getItem('video-time' + src)
   videoHolder.currentTime = parseInt(time) || 0
 
   videoHolder.src = src
@@ -607,7 +607,7 @@ async function videoOn (src) {
 
 function videosOff () {
   if (!isVideoMode()) { return }
-  sessionStorage.setItem('video-time' + videoHolder.src, videoHolder.currentTime)
+  localStorage.setItem('video-time' + videoHolder.src, videoHolder.currentTime)
   resetView()
   softPrev()
   return true
