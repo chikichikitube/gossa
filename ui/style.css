@@ -24,6 +24,9 @@
   .file-size {
     display: none !important;
   }
+  .dir-size {
+    display: none !important;
+  }
 }
 
 /* hello standards 👋🏻 */
