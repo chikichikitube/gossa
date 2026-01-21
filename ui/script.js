@@ -47,8 +47,7 @@ const flicker = w => w.classList.remove('runFade') || void w.offsetWidth || w.cl
 
 const encodeURIHash = e => encodeURI(e).replaceAll('#', '%23')
 
-// Manual upload
-manualUpload.addEventListener('change', () => Array.from(manualUpload.files).forEach(f => isDupe(f.name) || postFile(f, '/' + f.name)), false)
+
 
 // Soft nav
 async function browseTo (href, flickerDone, skipHistory) {

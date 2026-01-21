@@ -88,14 +88,6 @@
 
     <h1 onclick="return titleClick(event)">.{{.Title}}</h1>
 
-    <div id="icHolder">
-        {{if not .Ro}}
-            <div style="display:none;" onclick="document.getElementById('clickupload').click()" class="ic icon-large-upload manualUp"></div>
-            <div onclick="window.displayPad()" class="ic icon-large-pad" title="Create TXT file"></div>
-            <div class="ic icon-large-folder" onclick="window.mkdirBtn()" title="Create Folder"></div>
-        {{end}}
-    </div>
-
     <div id="pics" style="display:none;"> <img draggable="false" onclick="window.picsNav()" id="picsHolder" /></div>
     <div id="video" style="display:none;">
         <div onclick="window.videodl()" class="icon-dl" id="video-dl"></div>
